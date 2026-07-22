@@ -62,9 +62,9 @@ jobs:
             ~/.buildozer/android/packages
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: android-downloads-v2-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
+          key: android-downloads-v3-${{ runner.os }}-${{ hashFiles('buildozer.spec') }}
           restore-keys: |
-            android-downloads-v2-${{ runner.os }}-
+            android-downloads-v3-${{ runner.os }}-
 
       - name: Install Linux build dependencies
         run: |
@@ -102,6 +102,10 @@ jobs:
         run: |
           rm -rf .buildozer
           rm -rf bin
+
+      - name: Show pinned Android build settings
+        run: |
+          grep -E '^(requirements|android.api|android.minapi|android.ndk|android.archs|p4a.branch)' buildozer.spec
 
       - name: Build APK
         run: buildozer -v android debug
